@@ -3,7 +3,7 @@
 
 Basic MongoDB cluster operations.
 
-![](mongo_db_university.png)
+![](assets/mongo_db_university.png)
 
 ## MongoDB University M103 - Basic Cluster Administration
 
