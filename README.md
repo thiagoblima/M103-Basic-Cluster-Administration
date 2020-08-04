@@ -9,6 +9,33 @@ Basic MongoDB cluster operations.
 
 > https://university.mongodb.com/courses/M103/about
 
+## The Mongod
+
+Launch mongod in the first shell:
+
+```
+mongod
+```
+
+Connect to the Mongo shell in the second shell:
+
+```
+mongo
+```
+
+To create a new collection:
+
+```
+db.createCollection("employees")
+```
+
+Try to connect back to Mongo shell, without specifying a port:
+```
+use admin
+db.shutdownServer()
+exit
+```
+
 ## Release History
 
 * 0.2.1
