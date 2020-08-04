@@ -144,6 +144,32 @@ processManagement:
   fork: true
 ```
 
+## File Structure
+
+List --dbpath directory:
+
+```
+ls -l /data/db
+```
+
+List diagnostics data directory:
+
+```
+ls -l /data/db/diagnostic.data
+```
+
+List journal directory:
+
+```
+ls -l /data/db/journal
+```
+
+List socket file:
+
+```
+ls /tmp/mongodb-27017.sock
+```
+
 ## Release History
 
 * 0.2.1
