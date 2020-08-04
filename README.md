@@ -48,6 +48,7 @@ This command will output the various options for mongod with a description of th
 Note: The --fork option is not available on the Windows operating system.
 
 > dbpath
+
 The dbpath is the directory where all the data files for your database are stored. The dbpath also contains journaling logs to provide durability in case of a crash. As we saw before, the default dbpath is /data/db; however, you can specify any directory that exists on your machine. The directory must have read/write permissions since database and journaling files will be written to the directory. To use the dbpath option, include the dbpath flag and specify the name of your directory:
 
 ```
@@ -55,6 +56,7 @@ mongod --dbpath <directory path>
 ```
 
 > port
+
 The port option allows us to specify the port on which mongod will listen for client connections. If we don't specify a port, it will default to 27017. Database clients should specify the same port to connect to mongod. To specify a port, run:
 
 ```
@@ -62,6 +64,7 @@ mongod --port <port number>
 ```
 
 > auth
+
 auth enables authentication to control which users can access the database. When auth is specified, all database clients who want to connect to mongod first need to authenticate.
 
 Before any database users have been configured, a Mongo shell running on localhost will have access to the database. We can then configure users and their permission levels using the shell. Once one or more users have been configured, the shell will no longer have default access. To enable authentication, run mongod with the auth option:
