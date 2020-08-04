@@ -92,6 +92,57 @@ mongod --bind_ip localhost,123.123.123.123
 
 If using the bind_ip option with external IP addresses, it's recommended to enable auth to ensure that remote clients connecting to mongod have the proper credentials.
 
+## The Configuration File
+
+These lecture instructions are not meant to be reproduced in your environment. They reflect what you will see in the lecture video. However, they may point to non-existing resources and files.
+
+Launch mongod using default configuration:
+
+```
+mongod
+```
+
+Launch mongod with specified --dbpath and --logpath:
+
+```
+mongod --dbpath /data/db --logpath /data/log/mongod.log
+```
+
+Launch mongod and fork the process:
+
+```
+mongod --dbpath /data/db --logpath /data/log/mongod.log --fork
+```
+
+Launch mongod with many configuration options:
+
+Note that all "ssl" options have been edited to use "tls" instead. As of MongoDB 4.2, options using "ssl" have been deprecated.
+
+```
+mongod --dbpath /data/db --logpath /data/log/mongod.log --fork --replSet "M103" --keyFile /data/keyfile --bind_ip "127.0.0.1,192.168.103.100" --tlsMode requireTLS --tlsCAFile "/etc/tls/TLSCA.pem" --tlsCertificateKeyFile "/etc/tls/tls.pem"
+```
+
+Example configuration file, with the same configuration options as above:
+
+```
+storage:
+  dbPath: "/data/db"
+systemLog:
+  path: "/data/log/mongod.log"
+  destination: "file"
+replication:
+  replSetName: M103
+net:
+  bindIp : "127.0.0.1,192.168.103.100"
+tls:
+  mode: "requireTLS"
+  certificateKeyFile: "/etc/tls/tls.pem"
+  CAFile: "/etc/tls/TLSCA.pem"
+security:
+  keyFile: "/data/keyfile"
+processManagement:
+  fork: true
+```
 
 ## Release History
 
