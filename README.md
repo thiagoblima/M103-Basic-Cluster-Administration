@@ -3,7 +3,9 @@
 
 Basic MongoDB cluster operations, this is a studying repository and the *answers aren't being shown here*, only import commands, the only reason of this repository is spreading knowledge.
 
+
 ![](assets/mongo_db_university.png)
+
 
 ## MongoDB University M103 - Basic Cluster Administration
 
