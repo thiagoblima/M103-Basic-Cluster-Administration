@@ -388,7 +388,9 @@ use admin
 db.shutdownServer()
 ```
 
-Authenticate as root user:
+## Built-In Roles: Part 2
+
+Authenticate as ```root``` user:
 
 ```
 mongo admin -u root -p root123
