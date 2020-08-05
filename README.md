@@ -234,6 +234,50 @@ Introspect a Shell Helper:
 db.<collection>.createIndex
 ```
 
+## Logging Basics
+
+Get the logging components:
+
+```
+mongo admin --host 192.168.103.100:27000 -u m103-admin -p m103-pass --eval '
+  db.getLogComponents()
+'
+```
+
+Change the logging level:
+
+```
+mongo admin --host 192.168.103.100:27000 -u m103-admin -p m103-pass --eval '
+  db.setLogLevel(0, "index")
+'
+```
+
+View the logs through the Mongo shell:
+
+```
+db.adminCommand({ "getLog": "global" })
+```
+
+View the logs through the command line:
+
+```
+tail -f /data/db/mongod.log
+```
+
+Update a document:
+
+```
+mongo admin --host 192.168.103.100:27000 -u m103-admin -p m103-pass --eval '
+  db.products.update( { "sku" : 6902667 }, { $set : { "salePrice" : 39.99} } )
+'
+```
+
+Look for instructions in the log file with grep:
+
+```
+grep -i 'update' /data/db/mongod.log
+```
+
 ## Release History
 
 * 0.2.1
