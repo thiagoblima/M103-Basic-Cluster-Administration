@@ -388,7 +388,7 @@ use admin
 db.shutdownServer()
 ```
 
-## Built-In Roles: Part 2
+## Built-In Roles
 
 Authenticate as ```root``` user:
 
