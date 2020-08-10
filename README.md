@@ -487,6 +487,191 @@ Use mongoimport to create a MongoDB collection from a JSON or CSV file:
 mongoimport --port 30000 products.json
 ```
 
+## Replication - Chapter 2
+
+#### Setting Up a Replica Set
+
+Lecture Instructions
+
+Note: In the video lecture, we used the old hostname "m103.mongodb.university" which has been changed to "m103" . We have updated all of the following commands accordingly.
+
+The configuration file for the first node (node1.conf):
+
+```
+storage:
+  dbPath: /var/mongodb/db/node1
+net:
+  bindIp: 192.168.103.100,localhost
+  port: 27011
+security:
+  authorization: enabled
+  keyFile: /var/mongodb/pki/m103-keyfile
+systemLog:
+  destination: file
+  path: /var/mongodb/db/node1/mongod.log
+  logAppend: true
+processManagement:
+  fork: true
+replication:
+  replSetName: m103-example
+```
+
+Creating the keyfile and setting permissions on it:
+
+```
+sudo mkdir -p /var/mongodb/pki/
+sudo chown vagrant:vagrant /var/mongodb/pki/
+openssl rand -base64 741 > /var/mongodb/pki/m103-keyfile
+chmod 400 /var/mongodb/pki/m103-keyfile
+```
+
+Creating the dbpath for node1:
+
+```
+mkdir -p /var/mongodb/db/node1
+```
+Starting a mongod with node1.conf:
+
+```
+mongod -f node1.conf
+```
+
+Copying node1.conf to node2.conf and node3.conf:
+
+```
+cp node1.conf node2.conf
+cp node2.conf node3.conf
+```
+
+Editing node2.conf using vi:
+
+```
+vi node2.conf
+```
+
+Saving the file and exiting vi:
+
+```
+:wq
+```
+
+node2.conf, after changing the dbpath, port, and logpath:
+
+```
+storage:
+  dbPath: /var/mongodb/db/node2
+net:
+  bindIp: 192.168.103.100,localhost
+  port: 27012
+security:
+  keyFile: /var/mongodb/pki/m103-keyfile
+systemLog:
+  destination: file
+  path: /var/mongodb/db/node2/mongod.log
+  logAppend: true
+processManagement:
+  fork: true
+replication:
+  replSetName: m103-example
+```
+
+node3.conf, after changing the dbpath, port, and logpath:
+
+```
+storage:
+  dbPath: /var/mongodb/db/node3
+net:
+  bindIp: 192.168.103.100,localhost
+  port: 27013
+security:
+  keyFile: /var/mongodb/pki/m103-keyfile
+systemLog:
+  destination: file
+  path: /var/mongodb/db/node3/mongod.log
+  logAppend: true
+processManagement:
+  fork: true
+replication:
+  replSetName: m103-example
+```
+
+Creating the data directories for node2 and node3:
+
+```
+mkdir /var/mongodb/db/{node2,node3}
+```
+
+Starting mongod processes with node2.conf and node3.conf:
+
+```
+mongod -f node2.conf
+mongod -f node3.conf
+```
+
+Connecting to node1:
+
+```
+mongo --port 27011
+```
+
+Initiating the replica set:
+
+```
+rs.initiate()
+```
+
+Creating a user:
+
+```
+use admin
+db.createUser({
+  user: "m103-admin",
+  pwd: "m103-pass",
+  roles: [
+    {role: "root", db: "admin"}
+  ]
+})
+```
+
+Exiting out of the Mongo shell and connecting to the entire replica set:
+
+```
+exit
+mongo --host "m103-example/192.168.103.100:27011" -u "m103-admin"
+-p "m103-pass" --authenticationDatabase "admin"
+```
+
+Getting replica set status:
+
+```
+rs.status()
+```
+
+Adding other members to replica set:
+
+```
+rs.add("m103:27012")
+rs.add("m103:27013")
+```
+
+Getting an overview of the replica set topology:
+
+```
+rs.isMaster()
+```
+
+Stepping down the current primary:
+
+```
+rs.stepDown()
+```
+
+Checking replica set overview after election:
+
+```
+rs.isMaster()
+```
+
 ## Release History
 
 * 0.2.1
