@@ -742,7 +742,9 @@ stats.maxSize
 
 Get current oplog data (including first and last event times, and configured oplog size):
 
+```
 rs.printReplicationInfo()
+```
 
 ## Release History
 
