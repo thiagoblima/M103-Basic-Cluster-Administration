@@ -684,6 +684,65 @@ Commands covered in this lesson:
 
 > rs.printReplicationInfo()
 
+## Local DB: Part 1
+
+Make a data directory and launch a mongod process for a standalone node:
+
+```
+mkdir allbymyselfdb
+mongod --dbpath allbymyselfdb
+```
+
+Display all databases (by default, only admin and local):
+
+```
+mongo
+show dbs
+```
+
+Display collections from the local database (this displays more collections from a replica set than from a standalone node):
+
+```
+use local
+show collections
+```
+
+Query the oplog after connected to a replica set:
+
+```
+use local
+db.oplog.rs.find()
+```
+
+Get information about the oplog (remember the oplog is a capped collection).
+
+Store oplog stats as a variable called stats:
+
+```
+var stats = db.oplog.rs.stats()
+```
+
+Verify that this collection is capped (it will grow to a pre-configured size before it starts to overwrite the oldest entries with newer ones):
+
+```
+stats.capped
+```
+
+Get current size of the oplog:
+
+```
+stats.size
+```
+
+Get size limit of the oplog:
+
+```
+stats.maxSize
+```
+
+Get current oplog data (including first and last event times, and configured oplog size):
+
+rs.printReplicationInfo()
 
 ## Release History
 
