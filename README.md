@@ -672,6 +672,19 @@ Checking replica set overview after election:
 rs.isMaster()
 ```
 
+## Replication Commands
+
+Commands covered in this lesson:
+
+> rs.status()
+
+> rs.isMaster()
+
+> db.serverStatus()['repl']
+
+> rs.printReplicationInfo()
+
+
 ## Release History
 
 * 0.2.1
