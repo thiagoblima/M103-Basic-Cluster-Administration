@@ -746,6 +746,46 @@ Get current oplog data (including first and last event times, and configured opl
 rs.printReplicationInfo()
 ```
 
+## Local DB: Part 2
+
+Create new namespace m103.messages:
+
+```
+use m103
+db.createCollection('messages')
+```
+
+Query the oplog, filtering out the heartbeats ("periodic noop") and only returning the latest entry:
+
+```
+use local
+db.oplog.rs.find( { "o.msg": { $ne: "periodic noop" } } ).sort( { $natural: -1 } ).limit(1).pretty()
+```
+
+Insert 100 different documents:
+
+```
+use m103
+for ( i=0; i< 100; i++) { db.messages.insert( { 'msg': 'not yet', _id: i } ) }
+db.messages.count()
+```
+
+Query the oplog to find all operations related to m103.messages:
+
+```
+use local
+db.oplog.rs.find({"ns": "m103.messages"}).sort({$natural: -1})
+```
+
+Illustrate that one update statement may generate many entries in the oplog:
+
+```
+use m103
+db.messages.updateMany( {}, { $set: { author: 'norberto' } } )
+use local
+db.oplog.rs.find( { "ns": "m103.messages" } ).sort( { $natural: -1 } )
+```
+
 ## Release History
 
 * 0.2.1
