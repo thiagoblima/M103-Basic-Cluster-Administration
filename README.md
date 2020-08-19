@@ -1237,6 +1237,46 @@ Adding new shard to cluster from mongos:
 sh.addShard("m103-repl/192.168.103.100:27012")
 ```
 
+If you'd like to explore the collections on the config database, you can find the instructions here:
+
+### Config DB
+
+Switch to config DB:
+
+```
+use config
+```
+
+> Query config.databases:
+
+```
+db.databases.find().pretty()
+```
+
+> Query config.collections:
+
+```
+db.collections.find().pretty()
+```
+
+> Query config.shards:
+
+```
+db.shards.find().pretty()
+```
+
+> Query config.chunks:
+
+```
+db.chunks.find().pretty()
+```
+
+> Query config.mongos:
+
+```
+db.mongos.find().pretty()
+```
+
 ## Release History
 
 * 0.2.1
