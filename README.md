@@ -1318,6 +1318,38 @@ sh.shardCollection("m103.products", {"sku" : 1 } )
 sh.status()
 ```
 
+### Chunks
+
+Show collections in config database:
+
+```
+use config
+show collections
+```
+
+Find one document from the chunks collection:
+```
+db.chunks.findOne()
+```
+
+Change the chunk size:
+```
+use config
+db.settings.save({_id: "chunksize", value: 2})
+```
+
+Check the status of the sharded cluster:
+
+```
+sh.status()
+```
+
+Import the new products.part2 dataset into MongoDB:
+
+```
+mongoimport /dataset/products.part2.json --port 26000 -u "m103-admin" -p "m103-pass" --authenticationDatabase "admin" --db m103 --collection products
+```
+
 ## Release History
 
 * 0.2.1
