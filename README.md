@@ -1350,6 +1350,27 @@ Import the new products.part2 dataset into MongoDB:
 mongoimport /dataset/products.part2.json --port 26000 -u "m103-admin" -p "m103-pass" --authenticationDatabase "admin" --db m103 --collection products
 ```
 
+
+### Balancing
+
+Start the balancer:
+
+```
+sh.startBalancer(timeout, interval)
+```
+
+Stop the balancer:
+
+```
+sh.stopBalancer(timeout, interval)
+```
+
+Enable/disable the balancer:
+
+```
+sh.setBalancerState(boolean)
+```
+
 ## Release History
 
 * 0.2.1
