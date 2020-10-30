@@ -1371,6 +1371,30 @@ Enable/disable the balancer:
 sh.setBalancerState(boolean)
 ```
 
+
+### Targeted Queries vs Scatter Gather
+
+Show collections in the m103 database:
+
+```
+use m103
+show collections
+```
+
+Targeted query with explain() output:
+
+```
+db.products.find({"sku" : 1000000749 }).explain()
+```
+
+Scatter gather query with explain() output:
+
+```
+db.products.find( {
+  "name" : "Gods And Heroes: Rome Rising - Windows [Digital Download]" }
+).explain()
+```
+
 ## Release History
 
 * 0.2.1
